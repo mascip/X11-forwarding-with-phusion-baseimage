@@ -24,7 +24,11 @@ ADD . /src
 RUN cat /src/ssh-pub-keys/*.pub > /root/.ssh/authorized_keys
 
 # X11 Forwarding
-RUN echo X11Forwarding yes >> /etc/ssh/ssh_config
+# RUN echo X11Forwarding yes >> /etc/ssh/ssh_config
+RUN cat /src/sshd_config > /etc/ssh/sshd_config
+    # I got this sshd_config file from phusion/baseimage issue #105:
+    #   https://github.com/phusion/baseimage-docker/pull/105
+
 
 # I have also tried these, which didn't make it work:
 # RUN echo X11UseLocalhost yes >> /etc/ssh/ssh_config

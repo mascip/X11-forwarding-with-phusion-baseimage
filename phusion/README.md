@@ -10,6 +10,11 @@ $ docker run -d -P --name=phu1 phu
 
 $ ssh root@$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' phu1) leafpad
 
+I have also tried with the -X option with the same result:
+
+$ ssh -X root@$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' phu1) leafpad
+
+
 Instead of starting a leafpad GUI, it says:
     X11 forwarding request failed on channel 0
     leafpad: Cannot open display: 
