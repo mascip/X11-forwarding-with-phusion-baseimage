@@ -16,5 +16,7 @@ Which does not work, and prints:
     leafpad: Cannot open display: 
 
 
-For some reason on my host machine, in /tmp/.X11-unix there is a X0 file, while there is no such file inside the container in /tmp/.X11-unix
+For some reason on my host machine, in /tmp/.X11-unix there is a X0 file, while there is no such file inside the container in /tmp/.X11-unix. I am wondering whether that could be a problem.
+
+Any other idea?
 
