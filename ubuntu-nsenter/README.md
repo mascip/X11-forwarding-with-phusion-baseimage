@@ -9,9 +9,11 @@ $ sudo nsenter --target $(docker inspect --format {{.State.Pid}} ubun1) --mount 
 
 Which does not work, and prints:
 
-(process:33): Gtk-WARNING **: Locale not supported by C library.
-        Using the fallback 'C' locale.
-leafpad: Cannot open display: 
+    (process:33): Gtk-WARNING **: Locale not supported by C library.
+
+            Using the fallback 'C' locale.
+
+    leafpad: Cannot open display: 
 
 
 For some reason on my host machine, in /tmp/.X11-unix there is a X0 file, while there is no such file inside the container in /tmp/.X11-unix
