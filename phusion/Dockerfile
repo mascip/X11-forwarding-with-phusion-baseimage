@@ -13,7 +13,7 @@ FROM phusion/baseimage:0.9.10
 
 # Installing the environment required: xserver, xdm, flux box, roc-filer and ssh
 # RUN apt-get update && apt-get install -y openssh-server leafpad
-RUN apt-get update && apt-get install -y leafpad
+RUN apt-get update && apt-get install -y leafpad xauth
     # I use leafpad to test whether X11 forwarding works
 
 # Copy local files into the container
@@ -28,17 +28,6 @@ RUN cat /src/ssh-pub-keys/*.pub > /root/.ssh/authorized_keys
 RUN cat /src/sshd_config > /etc/ssh/sshd_config
     # I got this sshd_config file from phusion/baseimage issue #105:
     #   https://github.com/phusion/baseimage-docker/pull/105
-
-
-# I have also tried these, which didn't make it work:
-# RUN echo X11UseLocalhost yes >> /etc/ssh/ssh_config
-# RUN echo X11DisplayOffset 10 >> /etc/ssh/ssh_config
-# RUN echo AddressFamily inet >> /etc/ssh/ssh_config
-
-# RUN echo X11Forwarding yes >> /etc/ssh/sshd_config
-# RUN echo X11UseLocalhost yes >> /etc/ssh/sshd_config
-# RUN echo X11DisplayOffset 10 >> /etc/ssh/sshd_config
-# RUN echo AddressFamily inet >> /etc/ssh/sshd_config
 
 # # Scripts to run at container startup
 # RUN mkdir -p /etc/my_init.d
