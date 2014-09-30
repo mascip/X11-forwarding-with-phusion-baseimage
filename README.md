@@ -9,3 +9,5 @@ In the **phusion/** folder, you will find how to make the same thing work in phu
 In the **ubuntu-nsenter** folder, I use nsenter instead of SSH.
 
 In the **ubuntu-x11-port** folder, I run the program directly with the CMD command in the Dockerfile
+
+In the **phusion-nsenter** folder, I use nsenter with a phusion-baseimage image.

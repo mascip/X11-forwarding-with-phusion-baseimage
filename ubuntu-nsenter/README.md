@@ -14,4 +14,4 @@ If I don't use xhost then it does not work, and prints:
     (process:33): Gtk-WARNING **: Locale not supported by C library.
             Using the fallback 'C' locale.
     No protocol specified
-    leafpad: Cannot open display: 
+    leafpad: Cannot open display:
