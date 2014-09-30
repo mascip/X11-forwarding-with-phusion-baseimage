@@ -1,6 +1,4 @@
-Trying to use phusion/baseimage for X11 Forwarding, but it does not work.
-
-Here is what I do:
+To use phusion/baseimage for X11 Forwarding, here is what I do:
 
 Put your SSH public key in the ssh-pub-keys folder
 
