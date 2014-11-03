@@ -1,8 +1,8 @@
-FROM phusion/baseimage:0.9.13
+FROM phusion/baseimage:0.9.15
     # A version of Ubuntu, specifically built for Docker
 
 # # Set correct environment variables.
-# ENV HOME /root
+ENV HOME /root
 # #     # I don't think I need this...
 
 # # # Regenerate SSH host keys. baseimage-docker does not contain any, so you
@@ -13,7 +13,7 @@ FROM phusion/baseimage:0.9.13
 
 # Installing the environment required: xserver, xdm, flux box, roc-filer and ssh
 # RUN apt-get update && apt-get install -y openssh-server leafpad
-RUN apt-get update && apt-get install -y leafpad
+RUN apt-get update && apt-get install -y leafpad xauth
     # I use leafpad to test whether X11 forwarding works
 
 # # Copy local files into the container
@@ -34,6 +34,5 @@ RUN apt-get update && apt-get install -y leafpad
 # # ADD 01-some-script.sh /etc/my_init.d/01-some-script.sh
 #     # I don't need this here
 
-# EXPOSE 22
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
