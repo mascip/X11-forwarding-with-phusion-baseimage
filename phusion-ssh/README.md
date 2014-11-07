@@ -1,6 +1,7 @@
-To use phusion/baseimage for X11 Forwarding, here is what I do:
+To use phusion/baseimage for X11 Forwarding, with SSH.
 
-Put your SSH public key in the ssh-pub-keys folder
+First, put your SSH public key in the ssh-pub-keys folder.
+Then do this:
 
     $ docker build -t phu .
     $ docker run -d -P --name=phu1 phu
@@ -8,7 +9,7 @@ Put your SSH public key in the ssh-pub-keys folder
 
 It should start a leafpad GUI.
 
-    Firefox also works:
+Firefox also works:
 
-$ ssh root@$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' phu1) firefox
+    $ ssh root@$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' phu1) firefox
 
