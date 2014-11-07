@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.10
+FROM phusion/baseimage:0.9.15
     # A version of Ubuntu, specifically built for Docker
 
 # # Set correct environment variables.
@@ -12,8 +12,8 @@ FROM phusion/baseimage:0.9.10
 #     # I don't think I need this...
 
 # Installing the environment required: xserver, xdm, flux box, roc-filer and ssh
-# RUN apt-get update && apt-get install -y openssh-server leafpad
-RUN apt-get update && apt-get install -y leafpad xauth
+# RUN apt-get update && apt-get install -y openssh-server firefox
+RUN apt-get update && apt-get install -y xauth leafpad firefox
     # I use leafpad to test whether X11 forwarding works
 
 # Copy local files into the container

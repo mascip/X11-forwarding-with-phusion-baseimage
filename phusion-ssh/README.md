@@ -9,3 +9,8 @@ $ docker run -d -P --name=phu1 phu
 $ ssh root@$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' phu1) leafpad
 
 It should start a leafpad GUI.
+
+Firefox also works:
+
+$ ssh root@$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' phu1) firefox
+
