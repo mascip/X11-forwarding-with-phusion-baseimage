@@ -48,3 +48,11 @@ To run **Firefox**, I'm unsuccessful so far. My current attempt is:
     $ ./dock build phx2
     $ ./dock run-for-ff phx21 phx2
     $ ./dock exec-ff phx21
+
+and the result is Firefox giving me this error:
+
+    Your Firefox profile cannot be loaded. It may be missing or inaccessible.
+
+I seem to have a problem with users and permissions...
+
+I have started to investigate [here](https://github.com/phusion/baseimage-docker/issues/163)
