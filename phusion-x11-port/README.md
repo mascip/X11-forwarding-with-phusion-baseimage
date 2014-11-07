@@ -29,19 +29,22 @@ I tried other ways to try and run Leafpad, but they don't work:
     $    ./dock nsenter-leaf px11
     $    ./dock exec-leaf px11
 
-What I don't understand, is why 
-
-    $ ./dock exec-leaf px11
-    EXECUTING: "docker exec px11 leafpad &"
-
-does not work, while this works:
+I don't understand why, but I need to use phusion-baseimage's `setuser` to make it work:
 
     $ ./dock exec-setuser-leaf px11
     EXECUTING: "docker exec px11 setuser developer leafpad &"
 
+**WORKS**, while
 
-To run `firefox`, I'm unsuccessful so far. My current attempt is:
+    $ ./dock exec-leaf px11
+    EXECUTING: "docker exec px11 leafpad &"
 
-$ ./dock build phx2
-$ ./dock run-for-ff phx21 phx2
-$ ./dock exec-ff phx21
+**DOES NOT WORK**.
+
+
+
+To run **Firefox**, I'm unsuccessful so far. My current attempt is:
+
+    $ ./dock build phx2
+    $ ./dock run-for-ff phx21 phx2
+    $ ./dock exec-ff phx21
