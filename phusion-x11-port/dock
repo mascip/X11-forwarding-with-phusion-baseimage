@@ -115,6 +115,8 @@ function run-for-ff () {
     echo "EXECUTING: $the_cmd"
     $the_cmd
 }
+        # -v /test-data/firefox:/home/developer/.mozilla/firefox \
+
         # --volumes-from=test_data1 \
         # --lxc-conf="lxc.cap.drop=sys_admin" \   # TRYING THIS FOR CHROMIUM BUG... https://github.com/docker/docker/issues/1079
 

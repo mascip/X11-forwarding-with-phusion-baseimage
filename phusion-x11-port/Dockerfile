@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y leafpad firefox
 # # To also make SSH work, so I can do more tests:
 # RUN apt-get install -y xauth
 # # Copy local files into the container
-# ADD . /src
+# COPY . /src
 # # Authorize SSH public key
 # # RUN mkdir /root/.ssh  # already exists
 # RUN cat /src/ssh-pub-keys/*.pub > /root/.ssh/authorized_keys
@@ -39,5 +39,7 @@ RUN the_user="developer" && \
     echo "$the_user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$the_user && \
     chmod 0440 /etc/sudoers.d/$the_user && \
     chown 1000:1000 -R $the_home
+
+    # touch $the_home/.mozilla/firefox/a-file-to-change-folder-ownership && \
 
 CMD ["/sbin/my_init"]
