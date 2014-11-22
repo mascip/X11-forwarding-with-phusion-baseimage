@@ -1,4 +1,5 @@
 #!/bin/bash
+# To execute the function gien as argument, check out the last line of this script
 
 # Less typing to build, run, and exec your containers!
 
