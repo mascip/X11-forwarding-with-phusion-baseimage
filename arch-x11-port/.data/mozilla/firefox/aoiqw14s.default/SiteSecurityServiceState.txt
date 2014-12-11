@@ -1,0 +1,4 @@
+www.facebook.com:HSTS	0	16413	1433687251722,1,0
+cdn.syndication.twimg.com:HSTS	0	16413	2049273771122,1,0
+apis.google.com:HSTS	0	16413	1429021651664,1,0
+syndication.twitter.com:HSTS	0	16413	2049273891371,1,0

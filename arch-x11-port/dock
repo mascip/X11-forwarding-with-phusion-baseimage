@@ -1,0 +1,150 @@
+#!/bin/bash
+# To execute the function gien as argument, check out the last line of this script
+
+# Less typing to build, run, and exec your containers!
+
+# Usage:
+# dock build $img_name
+# dock run-leaf $img_name
+# dock run-bash $ctn_name $img_name
+# dock run-only $ctn_name $img_name
+
+# my_docker_cmd="$HOME/docker-1-3/docker"
+my_docker_cmd=$DOCKER_CMD
+the_user=developer
+
+function build () {
+    if [[ $# < 1 ]]; then
+        echo "No Docker image name given. The image must be named"
+    fi
+    $my_docker_cmd build -t $1 ${2-.}
+}
+
+# Run a command in a container
+# Args:
+#   - is the container interactive? Or just a daemon?
+#   - container name (facultative)
+#   - image name
+#   - command
+# Note: I preserved the docker argument order (image and command last)
+function run-cmd () {
+    # echo "ARGS: $@"
+    # Do we name the container?
+    if [[ $1 = true ]]; then
+        is_there_a_cmd=1
+    else
+        is_there_a_cmd=0
+    fi
+    nb_of_args_without_name=$(expr 2 + $is_there_a_cmd)
+    if [[ $# > $nb_of_args_without_name ]]; then   # the container is named
+        line_of_names="--name=$2 $3"
+        the_cmd=$4
+    else
+        line_of_names="$2"
+        the_cmd=$3
+    fi
+    # Is this container interactive, or a daemon?
+    if [[ $1 = true ]]; then
+        echo "INTERACTIVE"
+        line_of_interactive="-ti"
+        line_of_cmd="$the_cmd"
+    else
+        echo "DAEMON"
+        line_of_interactive="-d -P"
+        line_of_cmd=""
+    fi
+    # Run the container
+    final_cmd="$my_docker_cmd run \
+        $line_of_interactive \
+        -e DISPLAY \
+        -e XAUTHORITY=/tmp/.Xauthority \
+        -v $XAUTHORITY:/tmp/.Xauthority \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        $line_of_names \
+        $line_of_cmd"
+    echo "EXECUTING: $final_cmd"
+    $final_cmd
+}
+
+function run-leaf () {
+    run-cmd true $@ leafpad
+}
+
+function run-nedit () {
+    run-cmd true $@ nedit
+}
+
+function run () {
+    run-cmd true $@
+}
+
+function run-bash () {
+    run-cmd true $@ /bin/bash
+}
+
+function run-only () {
+    if [[ $# < 2 ]]; then
+        echo "No container name given. You must give this container a name"
+    fi
+    run-cmd false $@
+}
+
+function nsenter-leaf () {
+    the_cmd="sudo docker-bash $1 leafpad"
+    echo "EXECUTING: $the_cmd"
+    $the_cmd
+}
+
+function exec-leaf () {
+    $my_docker_cmd exec $1 leafpad
+    echo "EXECUTING: $the_cmd"
+    $the_cmd
+}
+
+function exec-setuser-leaf () {
+    the_cmd="$my_docker_cmd exec $1 setuser $the_user leafpad"
+    echo "EXECUTING: $the_cmd"
+    $the_cmd
+}
+
+function run-for-ff () {
+    if [[ $# < 2 ]]; then
+        echo "No container name given. You must give this container a name"
+    fi
+    # Do we name the container?
+    line_of_names="--name=$1 $2"
+    line_of_cmd="/sbin/my_init"   # don't add /bin/bash!!! \
+    the_cmd="$my_docker_cmd run \
+        -d -P \
+        -e DISPLAY \
+        -e XAUTHORITY=/tmp/.Xauthority \
+        -v $XAUTHORITY:/tmp/.Xauthority \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        $line_of_names \
+        $line_of_cmd"
+    echo "EXECUTING: $the_cmd"
+    $the_cmd
+}
+        # -v /test-data/firefox:/home/developer/.mozilla/firefox \
+
+        # --volumes-from=test_data1 \
+        # --lxc-conf="lxc.cap.drop=sys_admin" \   # TRYING THIS FOR CHROMIUM BUG... https://github.com/docker/docker/issues/1079
+
+function exec-ff () {
+    the_cmd="$my_docker_cmd exec $1 setuser $the_user firefox"
+    echo "EXECUTING: $the_cmd"
+    $the_cmd
+}
+
+function exec-bash () {
+    echo "Connecting to the container... then do: \
+    setuser $the_user leafpad OR JUST leafpad"
+    $my_docker_cmd exec -ti $1 /bin/bash
+}
+
+function ssh-leaf () {
+    ssh root@$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' $1) leafpad
+}
+
+# Execute the function given as argument
+"$@"
