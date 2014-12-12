@@ -33,13 +33,13 @@ RUN the_user="developer" && \
     echo $the_user > /etc/container_environment/USER && \
     echo ":0" > /etc/container_environment/DISPLAY && \
     echo "/tmp/.Xauthority" > /etc/container_environment/XAUTHORITY && \
-    mkdir -p $the_home/.mozilla/firefox && \
     echo "$the_user:x:1000:1000:$the_capital_user,,,:/$the_user:/bin/bash" >> /etc/passwd && \
     echo "$the_user:x:1000:" >> /etc/group && \
     echo "$the_user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$the_user && \
     chmod 0440 /etc/sudoers.d/$the_user && \
     chown 1000:1000 -R $the_home
 
+    # mkdir -p $the_home/.mozilla/firefox && \
     # touch $the_home/.mozilla/firefox/a-file-to-change-folder-ownership && \
 
 CMD ["/sbin/my_init"]
