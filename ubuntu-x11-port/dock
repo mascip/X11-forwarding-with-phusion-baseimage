@@ -15,9 +15,10 @@ the_user=developer
 the_docker_cmd=${DOCKER_CMD-"docker"}
 
 x11_run_opts="-e DISPLAY \
-              -e XAUTHORITY=/tmp/.Xauthority \
-              -v $XAUTHORITY:/tmp/.Xauthority \
               -v /tmp/.X11-unix:/tmp/.X11-unix"
+
+              # -e XAUTHORITY=/tmp/.Xauthority \
+              # -v $XAUTHORITY:/tmp/.Xauthority \
 
 firefox_data_opt="-v $(pwd)/firefox-data:/home/developer/.mozilla/firefox"
 
