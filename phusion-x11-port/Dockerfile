@@ -1,7 +1,8 @@
 FROM phusion/baseimage:0.9.15
 
 # RUN apt-get update && apt-get install -y firefox
-RUN apt-get update && apt-get install -y leafpad firefox
+RUN apt-get update && apt-get install -y leafpad firefox chromium-browser
+RUN apt-get install -y dbus-x11
 
 
 # # To also make SSH work, so I can do more tests:
@@ -22,9 +23,10 @@ RUN apt-get update && apt-get install -y leafpad firefox
 # Replace 1000 with your user / group id
 RUN echo 1000 > /etc/container_environment/uid
 RUN echo 1000 > /etc/container_environment/gid
+RUN echo 1000 > /etc/container_environment/HOME
+RUN echo developer > /etc/container_environment/USER
+RUN echo /home/developer > /etc/container_environment/HOME
 
-ENV USER developer
-ENV HOME /home/developer
 
 RUN the_user="developer" && \
     the_home="/home/$the_user" && \
@@ -37,9 +39,14 @@ RUN the_user="developer" && \
     echo "$the_user:x:1000:" >> /etc/group && \
     echo "$the_user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$the_user && \
     chmod 0440 /etc/sudoers.d/$the_user && \
+    mkdir $the_home && \
     chown 1000:1000 -R $the_home
 
     # mkdir -p $the_home/.mozilla/firefox && \
     # touch $the_home/.mozilla/firefox/a-file-to-change-folder-ownership && \
+
+ENV USER developer
+ENV HOME /home/developer
+WORKDIR /home/developer
 
 CMD ["/sbin/my_init"]

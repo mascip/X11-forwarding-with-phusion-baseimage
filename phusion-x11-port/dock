@@ -111,6 +111,9 @@ function run-for-ff () {
         -e XAUTHORITY=/tmp/.Xauthority \
         -v $XAUTHORITY:/tmp/.Xauthority \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $(pwd)/data/mozilla/firefox:/home/developer/.mozilla/firefox \
+        -v $(pwd)/data/mozilla/firefox:/root/.mozilla/firefox \
+        -v $(pwd)/data/mozilla/firefox:/.mozilla/firefox \
         $line_of_names \
         $line_of_cmd"
     echo "EXECUTING: $the_cmd"
@@ -120,6 +123,29 @@ function run-for-ff () {
 
         # --volumes-from=test_data1 \
         # --lxc-conf="lxc.cap.drop=sys_admin" \   # TRYING THIS FOR CHROMIUM BUG... https://github.com/docker/docker/issues/1079
+
+function run-ff () {
+    if [[ $# < 2 ]]; then
+        echo "No container name given. You must give this container a name"
+    fi
+    # Do we name the container?
+    line_of_names="--name=$1 $2"
+    # line_of_cmd="/sbin/my_init"   # don't add /bin/bash!!! \
+    line_of_cmd="/sbin/my_init -- firefox"   # don't add /bin/bash!!! \
+    the_cmd="$my_docker_cmd run \
+        -ti \
+        -e DISPLAY \
+        -e XAUTHORITY=/tmp/.Xauthority \
+        -v $XAUTHORITY:/tmp/.Xauthority \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $(pwd)/data/mozilla/firefox:/home/developer/.mozilla/firefox \
+        -v $(pwd)/data/mozilla/firefox:/root/.mozilla/firefox \
+        -v $(pwd)/data/mozilla/firefox:/.mozilla/firefox \
+        $line_of_names \
+        $line_of_cmd"
+    echo "EXECUTING: $the_cmd"
+    $the_cmd
+}
 
 function exec-ff () {
     the_cmd="$my_docker_cmd exec $1 setuser $the_user firefox"
